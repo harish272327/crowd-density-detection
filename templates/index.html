@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Crowd Density Monitor{% endblock %}
+
+{% block content %}
+<div class="hero card">
+  <h1>Smart Crowd Density Monitor</h1>
+  <p>Upload a crowd image or capture a live webcam frame to estimate occupancy, detect social-distancing issues, and review density trends.</p>
+</div>
+
+<div class="grid-two">
+  <section class="card form-card">
+    <h2>Analyze a scene</h2>
+
+    <form method="post" action="{{ url_for('analyze') }}" enctype="multipart/form-data">
+      <label class="field-label">Venue capacity</label>
+      <input type="number" name="capacity" min="1" value="100" placeholder="100">
+
+      <label class="field-label">Upload image</label>
+      <input type="file" name="image_file" accept="image/*">
+
+      <div class="webcam-box">
+        <video id="webcam" autoplay playsinline muted></video>
+        <canvas id="snapshotCanvas" style="display:none"></canvas>
+      </div>
+
+      <div class="button-row">
+        <button type="button" class="secondary" id="startCameraBtn">Start webcam</button>
+        <button type="button" class="secondary" id="captureBtn">Capture frame</button>
+      </div>
+
+      <input type="hidden" name="webcam_data" id="webcam_data">
+
+      <div class="checkboxes">
+        <label><input type="checkbox" name="speak" value="on"> Audio alert</label>
+        <label><input type="checkbox" name="save_pdf" value="on"> Save PDF report</label>
+      </div>
+
+      <button type="submit" class="primary-btn">Analyze crowd density</button>
+    </form>
+  </section>
+
+  <aside class="card info-panel">
+    <h2>System status</h2>
+    <ul class="status-list">
+      <li><strong>Detector:</strong> {{ detector_name }}</li>
+      <li><strong>Model loaded:</strong> {{ 'Yes' if model_loaded else 'No' }}</li>
+      <li><strong>Density labels:</strong> Low / Medium / High</li>
+      <li><strong>Outputs:</strong> heatmap, violations, trend, report</li>
+    </ul>
+
+    <div class="mini-card">
+      <h3>What the app does</h3>
+      <ul>
+        <li>Counts people using a trained ML regressor</li>
+        <li>Measures occupancy as a percentage of venue capacity</li>
+        <li>Shows density heatmap overlay</li>
+        <li>Detects social-distancing violations</li>
+        <li>Logs readings and shows trend forecasts</li>
+      </ul>
+    </div>
+  </aside>
+</div>
+{% endblock %}

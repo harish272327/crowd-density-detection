@@ -1,0 +1,35 @@
+{
+  "n_samples": 900,
+  "max_count": 150,
+  "test_mae": 3.9931545863601414,
+  "test_r2": 0.9828255386937204,
+  "density_thresholds": {
+    "low_max": 19.0,
+    "medium_max": 52.0
+  },
+  "feature_importances": {
+    "edge_density": 0.0018,
+    "edge_density_half": 0.938,
+    "foreground_ratio": 0.0501,
+    "contour_count": 0.0008,
+    "contour_count_small": 0.0013,
+    "corner_count": 0.0016,
+    "lbp_entropy": 0.0027,
+    "gray_std": 0.0016,
+    "perimeter_density": 0.0015,
+    "hog_detections": 0.0006
+  },
+  "feature_names": [
+    "edge_density",
+    "edge_density_half",
+    "foreground_ratio",
+    "contour_count",
+    "contour_count_small",
+    "corner_count",
+    "lbp_entropy",
+    "gray_std",
+    "perimeter_density",
+    "hog_detections"
+  ],
+  "note": "Trained on procedurally generated synthetic crowd scenes (see synth_data.py) because this environment has no internet access to download a real crowd-counting dataset. Swap in real data via build_dataset_from_real_images() in train_on_real_data.py for production accuracy."
+}

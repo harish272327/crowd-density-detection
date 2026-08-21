@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Trend Forecast{% endblock %}
+
+{% block content %}
+<div class="card trend-card">
+  <h1>Density Trend</h1>
+
+  {% if img_b64 %}
+    <div class="trend-image-wrap">
+      <img src="data:image/png;base64,{{ img_b64 }}" alt="Crowd density trend chart">
+    </div>
+    <div class="suggestion-box">
+      <p>{{ message }}</p>
+    </div>
+  {% else %}
+    <div class="suggestion-box warning">
+      <p>{{ message }}</p>
+    </div>
+  {% endif %}
+
+  <div class="action-row">
+    <a class="secondary" href="{{ url_for('index') }}">Back to analyzer</a>
+  </div>
+</div>
+{% endblock %}

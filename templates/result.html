@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Analysis Result{% endblock %}
+
+{% block content %}
+<div class="card result-card">
+  <h1>Analysis Result</h1>
+
+  <div class="summary-grid">
+    <div class="metric">
+      <span class="label">Capacity used</span>
+      <strong>{{ result.percentage }}%</strong>
+    </div>
+    <div class="metric">
+      <span class="label">Density level</span>
+      <strong>{{ result.level }}</strong>
+    </div>
+    <div class="metric">
+      <span class="label">Violations</span>
+      <strong>{{ result.violations }}</strong>
+    </div>
+    <div class="metric">
+      <span class="label">Capacity</span>
+      <strong>{{ result.capacity }}</strong>
+    </div>
+  </div>
+
+  <div class="suggestion-box">
+    <h3>Recommendation</h3>
+    <p>{{ result.suggestion }}</p>
+  </div>
+
+  <div class="image-grid">
+    <figure class="image-panel">
+      <h3>Detection view</h3>
+      <img src="{{ url_for('static', filename='results/' + result.detections_img) }}" alt="Detections">
+    </figure>
+
+    <figure class="image-panel">
+      <h3>Heatmap</h3>
+      <img src="{{ url_for('static', filename='results/' + result.heatmap_img) }}" alt="Heatmap">
+    </figure>
+  </div>
+
+  {% if result.audio_file %}
+  <div class="audio-box">
+    <audio controls src="{{ url_for('static', filename='results/' + result.audio_file) }}"></audio>
+  </div>
+  {% endif %}
+
+  {% if result.pdf_file %}
+  <div class="action-row">
+    <a class="primary-btn" href="{{ url_for('download_report', filename=result.pdf_file) }}">Download PDF report</a>
+  </div>
+  {% endif %}
+
+  <div class="action-row">
+    <a class="secondary" href="{{ url_for('index') }}">Run another analysis</a>
+    <a class="secondary" href="{{ url_for('trend') }}">View trend</a>
+  </div>
+</div>
+{% endblock %}

@@ -8,7 +8,10 @@ import os
 import joblib
 import numpy as np
 
-from ml.features import extract_features
+try:
+    from ml.features import extract_features
+except Exception:
+    from features import extract_features
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, "models")
