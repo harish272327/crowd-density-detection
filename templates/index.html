@@ -4,13 +4,43 @@
 
 {% block content %}
 <div class="hero card">
-  <h1>Smart Crowd Density Monitor</h1>
-  <p>Upload a crowd image or capture a live webcam frame to estimate occupancy, detect social-distancing issues, and review density trends.</p>
+  <div class="hero-header">
+    <div>
+      <span class="eyebrow">AI public safety dashboard</span>
+      <h1>Smart Crowd Density Monitor</h1>
+    </div>
+    <div class="status-pill {% if model_loaded %}online{% else %}offline{% endif %}">
+      {% if model_loaded %}System online{% else %}Model offline{% endif %}
+    </div>
+  </div>
+  <p>Upload a crowd image or capture a live webcam frame to estimate occupancy, detect social-distancing issues, and review density trends in real time.</p>
+</div>
+
+<div class="metric-row">
+  <div class="mini-stat">
+    <span class="mini-label">Detector</span>
+    <strong>{{ detector_name }}</strong>
+  </div>
+  <div class="mini-stat">
+    <span class="mini-label">Capacity model</span>
+    <strong>Live</strong>
+  </div>
+  <div class="mini-stat">
+    <span class="mini-label">Density labels</span>
+    <strong>Low / Medium / High</strong>
+  </div>
+  <div class="mini-stat">
+    <span class="mini-label">Report output</span>
+    <strong>PDF + Trend</strong>
+  </div>
 </div>
 
 <div class="grid-two">
   <section class="card form-card">
-    <h2>Analyze a scene</h2>
+    <div class="section-header">
+      <h2>Analyze a scene</h2>
+      <span class="section-tag">Monitoring</span>
+    </div>
 
     <form method="post" action="{{ url_for('analyze') }}" enctype="multipart/form-data">
       <label class="field-label">Venue capacity</label>
@@ -41,7 +71,10 @@
   </section>
 
   <aside class="card info-panel">
-    <h2>System status</h2>
+    <div class="section-header">
+      <h2>System status</h2>
+      <span class="section-tag alt">Live</span>
+    </div>
     <ul class="status-list">
       <li><strong>Detector:</strong> {{ detector_name }}</li>
       <li><strong>Model loaded:</strong> {{ 'Yes' if model_loaded else 'No' }}</li>
@@ -50,13 +83,12 @@
     </ul>
 
     <div class="mini-card">
-      <h3>What the app does</h3>
+      <h3>Operational overview</h3>
       <ul>
-        <li>Counts people using a trained ML regressor</li>
-        <li>Measures occupancy as a percentage of venue capacity</li>
-        <li>Shows density heatmap overlay</li>
-        <li>Detects social-distancing violations</li>
-        <li>Logs readings and shows trend forecasts</li>
+        <li>Counts people using a trained regressor</li>
+        <li>Measures occupancy against venue capacity</li>
+        <li>Highlights heatmap and social distance issues</li>
+        <li>Logs readings and forecasts future crowd load</li>
       </ul>
     </div>
   </aside>
