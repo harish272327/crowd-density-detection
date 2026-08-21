@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+static/uploads/
+static/results/
+reports/
+crowd_log.csv
