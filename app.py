@@ -507,6 +507,16 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/health")
+def health_check():
+    return jsonify({
+        "status": "ok",
+        "detector": DETECTOR_NAME,
+        "model_loaded": crowd_model.MODEL_LOADED,
+        "service": "crowd-density-monitor"
+    })
+
+
 @app.route("/analyze", methods=["POST"])
 def analyze():
     """Handles both file-upload and webcam-snapshot (base64) submissions."""
@@ -534,6 +544,9 @@ def analyze():
         save_path = os.path.join(UPLOAD_DIR, f"{stamp}_{filename}")
         file.save(save_path)
         img_bgr = cv2.imread(save_path)
+        if img_bgr is None or img_bgr.size == 0:
+            flash("The uploaded image could not be read. Please try a different file.")
+            return redirect(url_for("index"))
 
     # Case 2: webcam snapshot sent as base64 data URL
     elif request.form.get("webcam_data"):
@@ -547,7 +560,7 @@ def analyze():
             flash("Could not read the webcam snapshot. Please try again.")
             return redirect(url_for("index"))
 
-    if img_bgr is None:
+    if img_bgr is None or img_bgr.size == 0:
         flash("No image received. Please upload a file or capture a webcam snapshot.")
         return redirect(url_for("index"))
 
